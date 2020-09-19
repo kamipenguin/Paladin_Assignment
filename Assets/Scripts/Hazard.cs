@@ -3,6 +3,7 @@
 public class Hazard : MonoBehaviour
 {
     private LifeManager _lifeManager;
+    private CameraShake _cameraShake;
     private enum HazardType { Spikes, Saw, Pit};
     [SerializeField]
     private HazardType _hazardType;
@@ -13,6 +14,7 @@ public class Hazard : MonoBehaviour
     private void Awake()
     {
         _lifeManager = FindObjectOfType<LifeManager>();
+        _cameraShake = FindObjectOfType<CameraShake>();
     }
 
     private void Update()
@@ -26,6 +28,7 @@ public class Hazard : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
+            _cameraShake.SetShakeElapsedTime();
             _lifeManager.UpdateHearts();
             _lifeManager.RespawnPlayer();
         }
