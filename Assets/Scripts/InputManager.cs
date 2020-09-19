@@ -3,15 +3,18 @@
 public class InputManager : MonoBehaviour
 {
     private MovementController _movementController;
+    private GameController _gameController;
 
     private void Awake()
     {
         _movementController = FindObjectOfType<MovementController>();
+        _gameController = FindObjectOfType<GameController>();
     }
 
     private void Update()
     {
-        HandleInput();
+        if (_gameController.IsPlaying)
+            HandleInput();
     }
 
     /// <summary>
@@ -19,13 +22,10 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void HandleInput()
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        float horizontal = Input.GetAxisRaw("Horizontal");
         _movementController.Walk(horizontal);
 
-        //if (Input.GetAxis("Jump") > 0)
-        //    _movementController.Jump();
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetAxisRaw("Jump") > 0)
             _movementController.Jump();
     }
 }

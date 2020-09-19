@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
@@ -38,6 +36,10 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the player is on the ground.
+    /// </summary>
+    /// <returns></returns>
     private bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x - _rayXOffset, transform.position.y), Vector2.down, 1);

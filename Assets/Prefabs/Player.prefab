@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 723458508510920688}
   - component: {fileID: 5021503543327074499}
   - component: {fileID: 4754089833418655799}
+  - component: {fileID: 2852168461678687661}
   - component: {fileID: 6057537306285620763}
   - component: {fileID: 6057537306285620762}
   - component: {fileID: 3126572358540729490}
   m_Layer: 2
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +99,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b52b353246f9f4dae03061911cdfa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveSpeed: 15
+  _jumpSpeed: 10
+--- !u!114 &2852168461678687661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2975668571375609470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc921adc12e86b4598adc8e2f988d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerSpawnPoint: {fileID: 0}
+  _heartsSpawnPoint: {fileID: 0}
+  _heart: {fileID: 4778769491316618809, guid: ddc67e971a85a374ca680a400b7fac2a, type: 3}
+  _maxHearts: 3
+  _offset: 70
 --- !u!61 &6057537306285620763
 BoxCollider2D:
   m_ObjectHideFlags: 0
