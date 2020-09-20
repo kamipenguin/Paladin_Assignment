@@ -43,11 +43,13 @@ public class InputManager : MonoBehaviour
             _jumpButtonHoldTimer += Time.deltaTime;
             if (_jumpButtonHoldTimer < _maxJumpButtonHoldTime)
                 _movementController.Jump();
+            else
+                _movementController.StopJumping();
         }
         else
-        {
             _movementController.StopJumping();
+
+        if (_movementController.IsGrounded)
             _jumpButtonHoldTimer = 0;
-        }
     }
 }

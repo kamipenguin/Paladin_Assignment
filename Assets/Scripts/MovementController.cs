@@ -27,7 +27,7 @@ public class MovementController : MonoBehaviour
     [SerializeField]
     private float _minJumpVelocity = 20f;
     [SerializeField]
-    private float _terminalVelocity = 2f;
+    private float _jumpFallDecelation = 2f;
     [SerializeField]
     private float _fallingGravity = 3f;
     private float _currentJumpSpeed;
@@ -106,7 +106,7 @@ public class MovementController : MonoBehaviour
         }
         else
         {
-            _currentJumpSpeed -= _jumpDeceleration;
+            _currentJumpSpeed -= _jumpDeceleration * Time.deltaTime;
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _currentJumpSpeed);
         }
     }
@@ -123,7 +123,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y - _jumpDeceleration);
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y - _jumpFallDecelation);
             }
         }
     }
@@ -142,9 +142,8 @@ public class MovementController : MonoBehaviour
 
     private void Update()
     {
-        if (!IsGrounded)
-            if (_rigidBody.velocity.y <= 0)
-                SetFallGravity();
+        if (_rigidBody.velocity.y <= 0)
+            SetFallGravity();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
