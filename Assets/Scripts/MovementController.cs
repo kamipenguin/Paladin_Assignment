@@ -34,6 +34,7 @@ public class MovementController : MonoBehaviour
     private bool _stoppedJumping;
 
     public bool IsGrounded { get; set; }
+    public bool IsJumping { get; set; }
 
     private void Awake()
     {
@@ -98,13 +99,14 @@ public class MovementController : MonoBehaviour
         if (IsGrounded)
         {
             IsGrounded = false;
+            IsJumping = true;
             _stoppedJumping = false;
             _currentJumpSpeed = _initialJumpForce;
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _currentJumpSpeed);
 
             SetJumpingAnimation();
         }
-        else
+        else if (IsJumping)
         {
             _currentJumpSpeed -= _jumpDeceleration * Time.deltaTime;
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _currentJumpSpeed);
@@ -126,6 +128,8 @@ public class MovementController : MonoBehaviour
                 _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y - _jumpFallDecelation);
             }
         }
+
+        IsJumping = false;
     }
 
     private void SetFallGravity()
