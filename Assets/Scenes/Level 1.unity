@@ -1029,7 +1029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4994103498491808525, guid: 16b56c0d4899d784697c08518ce7125e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16b56c0d4899d784697c08518ce7125e, type: 3}
@@ -1095,6 +1095,18 @@ PrefabInstance:
     - target: {fileID: 2975668571375609470, guid: 70c7bc7d948db1a408d6096cb398d8bf, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754089833418655799, guid: 70c7bc7d948db1a408d6096cb398d8bf, type: 3}
+      propertyPath: _jumpDeceleration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754089833418655799, guid: 70c7bc7d948db1a408d6096cb398d8bf, type: 3}
+      propertyPath: _initialJumpForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754089833418655799, guid: 70c7bc7d948db1a408d6096cb398d8bf, type: 3}
+      propertyPath: _minJumpVelocity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70c7bc7d948db1a408d6096cb398d8bf, type: 3}
@@ -1510,6 +1522,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8650349347338644458, guid: 90f379fece274ed4a8158c8f667c2d83, type: 3}
+      propertyPath: _maxJumpButtonHoldTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8650349347338644459, guid: 90f379fece274ed4a8158c8f667c2d83, type: 3}
       propertyPath: m_Name
       value: InputManager

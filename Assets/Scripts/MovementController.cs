@@ -7,8 +7,8 @@ public class MovementController : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]
-    private float _distance = 0.2f;
+    //[SerializeField]
+    //private float _distance = 0.2f;
 
     [Header("Walk Settings")]
     [SerializeField]
@@ -30,6 +30,8 @@ public class MovementController : MonoBehaviour
     private float _terminalVelocity = 2f;
     [SerializeField]
     private float _fallingGravity = 3f;
+    private float _currentJumpSpeed;
+    private bool _stoppedJumping;
 
     public bool IsGrounded { get; set; }
 
@@ -96,15 +98,39 @@ public class MovementController : MonoBehaviour
         if (IsGrounded)
         {
             IsGrounded = false;
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + _initialJumpForce);
+            _stoppedJumping = false;
+            _currentJumpSpeed = _initialJumpForce;
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _currentJumpSpeed);
 
             SetJumpingAnimation();
+        }
+        else
+        {
+            _currentJumpSpeed -= _jumpDeceleration;
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _currentJumpSpeed);
         }
     }
 
     public void StopJumping()
     {
-        _rigidBody.gravityScale = 3f;
+        if (!IsGrounded)
+        {
+            if (!_stoppedJumping)
+            {
+                _stoppedJumping = true;
+                float minVelocity = Mathf.Clamp(_rigidBody.velocity.y, 0, _minJumpVelocity);
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, minVelocity);
+            }
+            else
+            {
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y - _jumpDeceleration);
+            }
+        }
+    }
+
+    private void SetFallGravity()
+    {
+        _rigidBody.gravityScale = _fallingGravity;
     }
 
     private void SetJumpingAnimation()
@@ -112,6 +138,13 @@ public class MovementController : MonoBehaviour
         _animator.SetBool("IsIdling", false);
         _animator.SetBool("IsWalking", false);
         _animator.SetBool("IsJumping", true);
+    }
+
+    private void Update()
+    {
+        if (!IsGrounded)
+            if (_rigidBody.velocity.y <= 0)
+                SetFallGravity();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

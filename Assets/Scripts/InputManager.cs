@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour
     private MovementController _movementController;
     private GameController _gameController;
     [SerializeField]
-    private float _maxJumpButtonHoldTime = 1f;
+    private float _maxJumpButtonHoldTime = 0.5f;
     private float _jumpButtonHoldTimer = 0f;
 
     private float _storeHorizontal;
@@ -27,19 +27,27 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void HandleInput()
     {
+        // handles input for walking
         float horizontal = Input.GetAxisRaw("Horizontal");
         if (horizontal != 0)
         {
             _storeHorizontal = horizontal;
             _movementController.Move(horizontal);
-            Debug.Log("horizontal: " + horizontal);
         }
         else
             _movementController.StopMoving(_storeHorizontal);
 
+        // handles input for jumping
         if (Input.GetAxisRaw("Jump") > 0)
-            _movementController.Jump();
-        else if (!_movementController.IsGrounded)
+        {
+            _jumpButtonHoldTimer += Time.deltaTime;
+            if (_jumpButtonHoldTimer < _maxJumpButtonHoldTime)
+                _movementController.Jump();
+        }
+        else
+        {
             _movementController.StopJumping();
+            _jumpButtonHoldTimer = 0;
+        }
     }
 }
