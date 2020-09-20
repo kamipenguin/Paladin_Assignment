@@ -13,7 +13,6 @@ public class MovementController : MonoBehaviour
     [Header("Walk Settings")]
     [SerializeField]
     private float _moveAcceleration = 1f;
-    private float _currentSpeed;
     [SerializeField]
     private float _maxMoveSpeed = 10f;
     [SerializeField]
@@ -33,6 +32,8 @@ public class MovementController : MonoBehaviour
     private float _currentJumpSpeed;
     private bool _stoppedJumping;
 
+
+    public float CurrentSpeed { get; set; }
     public bool IsGrounded { get; set; }
     public bool IsJumping { get; set; }
 
@@ -52,11 +53,11 @@ public class MovementController : MonoBehaviour
     {
         // when player changes direction, set speed to 0.
         if ((_rigidBody.velocity.x > 0 && horizontal < 0) || (_rigidBody.velocity.x < 0 && horizontal > 0))
-            _currentSpeed = 0;
+            CurrentSpeed = 0;
         // accelerate the player's velocity to max speed.
-        _currentSpeed += _moveAcceleration * Time.deltaTime;
-        _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
-        _rigidBody.velocity = new Vector2(horizontal * _currentSpeed, _rigidBody.velocity.y);
+        CurrentSpeed += _moveAcceleration * Time.deltaTime;
+        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, _maxMoveSpeed);
+        _rigidBody.velocity = new Vector2(horizontal * CurrentSpeed, _rigidBody.velocity.y);
 
         SetWalkingAnimation();
     }
@@ -68,9 +69,12 @@ public class MovementController : MonoBehaviour
     public void StopMoving(float lastHorizontal)
     {
         // decelerate the player's velocity to 0, so the player stops moving.
-        _currentSpeed -= _moveDeceleration * Time.deltaTime;
-        _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
-        _rigidBody.velocity = new Vector2(lastHorizontal * _currentSpeed, _rigidBody.velocity.y);
+        if (CurrentSpeed != 0)
+        {
+            CurrentSpeed -= _moveDeceleration * Time.deltaTime;
+            CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, _maxMoveSpeed);
+            _rigidBody.velocity = new Vector2(lastHorizontal * CurrentSpeed, _rigidBody.velocity.y);
+        }
 
         SetIdleAnimation();
     }
@@ -97,12 +101,14 @@ public class MovementController : MonoBehaviour
         {
             if (_rigidBody.velocity.x > 0)
             {
+                _animator.SetBool("IsJumping", false);
                 _animator.SetBool("IsIdling", false);
                 _animator.SetBool("IsWalking", true);
                 _spriteRenderer.flipX = false;
             }
             else
             {
+                _animator.SetBool("IsJumping", false);
                 _animator.SetBool("IsIdling", false);
                 _animator.SetBool("IsWalking", true);
                 _spriteRenderer.flipX = true;

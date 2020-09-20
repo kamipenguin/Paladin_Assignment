@@ -6,6 +6,7 @@ public class LifeManager : MonoBehaviour
 {
     private GameController _gameController;
     private SpriteRenderer _spriteRenderer;
+    private MovementController _movementController;
     [SerializeField]
     private Transform _playerSpawnPoint;
 
@@ -27,6 +28,7 @@ public class LifeManager : MonoBehaviour
     {
         _gameController = FindObjectOfType<GameController>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _movementController = GetComponent<MovementController>();
     }
 
     private void Start()
@@ -81,9 +83,10 @@ public class LifeManager : MonoBehaviour
     /// </summary>
     public IEnumerator RespawnPlayer()
     {
+        _spriteRenderer.enabled = false;
         _gameController.IsPlaying = false;
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        _spriteRenderer.enabled = false;
+        _movementController.CurrentSpeed = 0;
         yield return new WaitForSeconds(_respawnCoolDown);
         gameObject.transform.position = _playerSpawnPoint.position;
         _spriteRenderer.enabled = true;
