@@ -4,6 +4,9 @@ public class InputManager : MonoBehaviour
 {
     private MovementController _movementController;
     private GameController _gameController;
+    [SerializeField]
+    private float _maxJumpButtonHoldTime = 1f;
+    private float _jumpButtonHoldTimer = 0f;
 
     private void Awake()
     {
@@ -23,9 +26,14 @@ public class InputManager : MonoBehaviour
     private void HandleInput()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        _movementController.Walk(horizontal);
+        if (horizontal != 0)
+            _movementController.Move(horizontal);
+        else
+            _movementController.StopMoving();
 
         if (Input.GetAxisRaw("Jump") > 0)
             _movementController.Jump();
+        else if (!_movementController.IsGrounded)
+            _movementController.StopJumping();
     }
 }

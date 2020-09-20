@@ -45,7 +45,7 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    public void SetShakeElapsedTime()
+    public void TriggerShake()
     {
         _shakeElapsedTime = _shakeDuration;
     }

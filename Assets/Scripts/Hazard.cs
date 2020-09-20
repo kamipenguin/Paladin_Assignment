@@ -28,7 +28,7 @@ public class Hazard : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            _cameraShake.SetShakeElapsedTime();
+            _cameraShake.TriggerShake();
             _lifeManager.UpdateHearts();
             _lifeManager.RespawnPlayer();
         }
