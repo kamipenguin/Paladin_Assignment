@@ -100,12 +100,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distance: 1.8
-  _moveAcceleration: 10
-  _maxMoveSpeed: 15
-  _moveDeceleration: 0.1
+  _moveAcceleration: 500
+  _maxMoveSpeed: 500
+  _moveDeceleration: 1500
   _initialJumpForce: 10
-  _jumpHoldVelocity: 1
   _jumpDeceleration: 1
+  _minJumpVelocity: 20
+  _terminalVelocity: 2
   _fallingGravity: 3
 --- !u!114 &2852168461678687661
 MonoBehaviour:
@@ -124,6 +125,7 @@ MonoBehaviour:
   _heart: {fileID: 4778769491316618809, guid: ddc67e971a85a374ca680a400b7fac2a, type: 3}
   _maxHearts: 3
   _offset: 70
+  _respawnCoolDown: 1
 --- !u!61 &6057537306285620763
 BoxCollider2D:
   m_ObjectHideFlags: 0

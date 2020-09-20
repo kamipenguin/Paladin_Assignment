@@ -13,6 +13,7 @@ public class MovementController : MonoBehaviour
     [Header("Walk Settings")]
     [SerializeField]
     private float _moveAcceleration = 1f;
+    private float _currentSpeed;
     [SerializeField]
     private float _maxMoveSpeed = 10f;
     [SerializeField]
@@ -20,11 +21,13 @@ public class MovementController : MonoBehaviour
 
     [Header("Jump Settings")]
     [SerializeField]
-    private float _initialJumpForce = 1f;
+    private float _initialJumpForce = 100f;
     [SerializeField]
-    private float _jumpHoldVelocity = 1f;
+    private float _jumpDeceleration = 10f;
     [SerializeField]
-    private float _jumpDeceleration = 1f;
+    private float _minJumpVelocity = 20f;
+    [SerializeField]
+    private float _terminalVelocity = 2f;
     [SerializeField]
     private float _fallingGravity = 3f;
 
@@ -40,17 +43,26 @@ public class MovementController : MonoBehaviour
 
     public void Move(float horizontal)
     {
-        if (Mathf.Abs(_rigidBody.velocity.x) > _maxMoveSpeed)
-            _rigidBody.velocity = new Vector2(horizontal * _maxMoveSpeed * Time.deltaTime, _rigidBody.velocity.y);
-        else
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x + horizontal * _moveAcceleration * Time.deltaTime, _rigidBody.velocity.y);
+        if ((_rigidBody.velocity.x > 0 && horizontal < 0) || (_rigidBody.velocity.x < 0 && horizontal > 0))
+            _currentSpeed = 0;
+        _currentSpeed += _moveAcceleration * Time.deltaTime;
+        _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
+        _rigidBody.velocity = new Vector2(horizontal * _currentSpeed * Time.deltaTime, _rigidBody.velocity.y);
 
         SetWalkingAnimation();
     }
 
-    public void StopMoving()
+    public void StopMoving(float lastHorizontal)
     {
-        _rigidBody.velocity = new Vector2(Mathf.Lerp(_rigidBody.velocity.x, 0, _moveDeceleration), _rigidBody.velocity.y);
+        _currentSpeed -= _moveDeceleration * Time.deltaTime;
+        _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
+        _rigidBody.velocity = new Vector2(lastHorizontal * _currentSpeed * Time.deltaTime, _rigidBody.velocity.y);
+
+        SetIdleAnimation();
+    }
+
+    private void SetIdleAnimation()
+    {
         if (_rigidBody.velocity.x == 0)
         {
             _animator.SetBool("IsWalking", false);
