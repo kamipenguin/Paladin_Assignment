@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class LifeManager : MonoBehaviour
 {
     private GameController _gameController;
+    private SpriteRenderer _spriteRenderer;
     [SerializeField]
     private Transform _playerSpawnPoint;
 
@@ -18,9 +20,13 @@ public class LifeManager : MonoBehaviour
     [SerializeField]
     private float _offset = 70f;
 
+    [SerializeField]
+    private float _respawnCoolDown = 1f;
+
     private void Awake()
     {
         _gameController = FindObjectOfType<GameController>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -73,9 +79,12 @@ public class LifeManager : MonoBehaviour
     /// <summary>
     /// Respawns the player.
     /// </summary>
-    public void RespawnPlayer()
+    public IEnumerator RespawnPlayer()
     {
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        _spriteRenderer.enabled = false;
+        yield return new WaitForSeconds(_respawnCoolDown);
         gameObject.transform.position = _playerSpawnPoint.position;
+        _spriteRenderer.enabled = true;
     }
 }
