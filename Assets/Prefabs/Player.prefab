@@ -103,7 +103,7 @@ MonoBehaviour:
   _moveAcceleration: 10
   _maxMoveSpeed: 15
   _moveDeceleration: 0.1
-  _initialJumpForce: 1
+  _initialJumpForce: 10
   _jumpHoldVelocity: 1
   _jumpDeceleration: 1
   _fallingGravity: 3
