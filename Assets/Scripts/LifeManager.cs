@@ -81,10 +81,12 @@ public class LifeManager : MonoBehaviour
     /// </summary>
     public IEnumerator RespawnPlayer()
     {
+        _gameController.IsPlaying = false;
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         _spriteRenderer.enabled = false;
         yield return new WaitForSeconds(_respawnCoolDown);
         gameObject.transform.position = _playerSpawnPoint.position;
         _spriteRenderer.enabled = true;
+        _gameController.IsPlaying = true;
     }
 }
