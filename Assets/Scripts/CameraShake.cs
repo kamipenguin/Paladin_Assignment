@@ -16,7 +16,6 @@ public class CameraShake : MonoBehaviour
     private CinemachineVirtualCamera _virtualCamera;
     private CinemachineBasicMultiChannelPerlin _virtualCameraNoise;
 
-
     private void Start()
     {
         if (_virtualCamera != null)
@@ -45,6 +44,9 @@ public class CameraShake : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Triggers the screenshake.
+    /// </summary>
     public void TriggerShake()
     {
         _shakeElapsedTime = _shakeDuration;

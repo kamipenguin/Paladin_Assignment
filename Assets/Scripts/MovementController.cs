@@ -44,11 +44,16 @@ public class MovementController : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    /// <summary>
+    /// Handles the walking movement of the player.
+    /// </summary>
+    /// <param name="horizontal"></param>
     public void Move(float horizontal)
     {
         // when player changes direction, set speed to 0.
         if ((_rigidBody.velocity.x > 0 && horizontal < 0) || (_rigidBody.velocity.x < 0 && horizontal > 0))
             _currentSpeed = 0;
+        // accelerate the player's velocity to max speed.
         _currentSpeed += _moveAcceleration * Time.deltaTime;
         _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
         _rigidBody.velocity = new Vector2(horizontal * _currentSpeed, _rigidBody.velocity.y);
@@ -56,8 +61,13 @@ public class MovementController : MonoBehaviour
         SetWalkingAnimation();
     }
 
+    /// <summary>
+    /// Handles the stopping movement of the player.
+    /// </summary>
+    /// <param name="lastHorizontal"></param>
     public void StopMoving(float lastHorizontal)
     {
+        // decelerate the player's velocity to 0, so the player stops moving.
         _currentSpeed -= _moveDeceleration * Time.deltaTime;
         _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
         _rigidBody.velocity = new Vector2(lastHorizontal * _currentSpeed, _rigidBody.velocity.y);
@@ -65,6 +75,9 @@ public class MovementController : MonoBehaviour
         SetIdleAnimation();
     }
 
+    /// <summary>
+    /// Set the animation to the idle animation when the horizontal velocity is zero.
+    /// </summary>
     private void SetIdleAnimation()
     {
         if (_rigidBody.velocity.x == 0)
@@ -75,6 +88,9 @@ public class MovementController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Set the animation to the walking animation when the horizontal velocity is not zero.
+    /// </summary>
     private void SetWalkingAnimation()
     {
         if (IsGrounded)
@@ -94,8 +110,12 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the jumping of the player.
+    /// </summary>
     public void Jump()
     {
+        // if the player is on the ground, set the upwards velocity high so the player launches in the air.
         if (IsGrounded)
         {
             IsGrounded = false;
@@ -106,6 +126,7 @@ public class MovementController : MonoBehaviour
 
             SetJumpingAnimation();
         }
+        // if the player is still jumping, decelerate the upwards velocity to slow the jump.
         else if (IsJumping)
         {
             _currentJumpSpeed -= _jumpDeceleration * Time.deltaTime;
@@ -113,10 +134,15 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the stopping of the jump of the player.
+    /// </summary>
     public void StopJumping()
     {
+        // check if the player is still in the air.
         if (!IsGrounded)
         {
+            // the first time the player's jump is stopped, set the jump velocity to a small value so the player's upwards velocity decelerates fast.
             if (!_stoppedJumping)
             {
                 _stoppedJumping = true;
@@ -132,11 +158,17 @@ public class MovementController : MonoBehaviour
         IsJumping = false;
     }
 
+    /// <summary>
+    /// Sets the fall gravity higher so the player falls quicker.
+    /// </summary>
     private void SetFallGravity()
     {
         _rigidBody.gravityScale = _fallingGravity;
     }
 
+    /// <summary>
+    /// Sets the animation to the jumping animation.
+    /// </summary>
     private void SetJumpingAnimation()
     {
         _animator.SetBool("IsIdling", false);
@@ -152,6 +184,7 @@ public class MovementController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // check if the player landed on the ground.
         if (collision.gameObject.CompareTag("Ground"))
         {
             _animator.SetBool("IsWalking", false);

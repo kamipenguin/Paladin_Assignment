@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void HandleInput()
     {
-        // handles input for walking
+        // handles input for walking.
         float horizontal = Input.GetAxisRaw("Horizontal");
         if (horizontal != 0)
         {
@@ -37,10 +37,11 @@ public class InputManager : MonoBehaviour
         else
             _movementController.StopMoving(_storeHorizontal);
 
-        // handles input for jumping
+        // handles input for jumping.
         if (Input.GetAxisRaw("Jump") > 0)
         {
             _jumpButtonHoldTimer += Time.deltaTime;
+            // check how long the jump button has been pressed.
             if (_jumpButtonHoldTimer < _maxJumpButtonHoldTime)
                 _movementController.Jump();
             else
@@ -49,6 +50,7 @@ public class InputManager : MonoBehaviour
         else
             _movementController.StopJumping();
 
+        // resets jump timer when the player is grounded.
         if (_movementController.IsGrounded)
             _jumpButtonHoldTimer = 0;
     }
