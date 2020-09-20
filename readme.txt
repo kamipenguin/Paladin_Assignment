@@ -16,8 +16,11 @@ To be able to control the jump well, the player can hold down the jump button
 to perform a longer jump, but also perform a short jump when just tapping
 the jump button. To have have a sense of weight, the gravity is also increased
 when the player is falling down.
-- I also added screenshake when the player gets damaged to give sensory 
+- I added screenshake when the player gets damaged to give sensory 
 feedback to the player.
+- I also added idle, walking and jumping animations because I feel that 
+animations also help a lot in how the game feels. Else it might look really
+static and clunky.
 
 Time spent on the assignment:
 - 8 hours (and 15 minutes)
