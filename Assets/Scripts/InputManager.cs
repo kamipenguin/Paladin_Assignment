@@ -32,6 +32,7 @@ public class InputManager : MonoBehaviour
         {
             _storeHorizontal = horizontal;
             _movementController.Move(horizontal);
+            Debug.Log("horizontal: " + horizontal);
         }
         else
             _movementController.StopMoving(_storeHorizontal);

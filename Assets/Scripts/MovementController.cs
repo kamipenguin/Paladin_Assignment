@@ -43,11 +43,12 @@ public class MovementController : MonoBehaviour
 
     public void Move(float horizontal)
     {
+        // when player changes direction, set speed to 0.
         if ((_rigidBody.velocity.x > 0 && horizontal < 0) || (_rigidBody.velocity.x < 0 && horizontal > 0))
             _currentSpeed = 0;
         _currentSpeed += _moveAcceleration * Time.deltaTime;
         _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
-        _rigidBody.velocity = new Vector2(horizontal * _currentSpeed * Time.deltaTime, _rigidBody.velocity.y);
+        _rigidBody.velocity = new Vector2(horizontal * _currentSpeed, _rigidBody.velocity.y);
 
         SetWalkingAnimation();
     }
@@ -56,7 +57,7 @@ public class MovementController : MonoBehaviour
     {
         _currentSpeed -= _moveDeceleration * Time.deltaTime;
         _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxMoveSpeed);
-        _rigidBody.velocity = new Vector2(lastHorizontal * _currentSpeed * Time.deltaTime, _rigidBody.velocity.y);
+        _rigidBody.velocity = new Vector2(lastHorizontal * _currentSpeed, _rigidBody.velocity.y);
 
         SetIdleAnimation();
     }
