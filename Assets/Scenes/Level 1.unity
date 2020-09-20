@@ -962,10 +962,6 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 6057537306285620765}
-    - target: {fileID: 4978887167008976756, guid: cc1def120f5d9eb42ab1fbe061c2ee5b, type: 3}
-      propertyPath: m_Lens.OrthographicSize
-      value: 6.76
-      objectReference: {fileID: 0}
     - target: {fileID: 4978887167008976757, guid: cc1def120f5d9eb42ab1fbe061c2ee5b, type: 3}
       propertyPath: m_BoundingShape2D
       value: 
