@@ -22,6 +22,14 @@ feedback to the player.
 animations also help a lot in how the game feels. Else it might look really
 static and clunky.
 
+Things to improve game feel if I had more time:
+- Tweaking the jump a little bit better, sometimes it feels like the player
+falls very quickly, especially from high heights (I'd like to restrict the
+min falling velocity to a specific value so that falling down always have
+the same speed, this gives the player more control as well).
+- Spawning dust particles when the player walks, jumps and lands.
+- Letting the player explode (more particles!) when touching the spikes or saw.
+
 Time spent on the assignment:
 - 8 hours (and 15 minutes)
 
