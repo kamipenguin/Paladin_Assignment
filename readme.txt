@@ -26,7 +26,7 @@ Things to improve game feel if I had more time:
 - Tweaking the jump a little bit better, sometimes it feels like the player
 falls very quickly, especially from high heights (I'd like to restrict the
 min falling velocity to a specific value so that falling down always have
-the same speed, this gives the player more control as well).
+the same end speed, this gives the player more (air) control as well).
 - Spawning dust particles when the player walks, jumps and lands.
 - Letting the player explode (more particles!) when touching the spikes or saw.
 
